@@ -17,7 +17,7 @@ const { analyze } = require('./analyse');
 //     console.log('GOOGLE_APPLICATION_CREDENTIALS environment variable is set.');
 // }
 
-const dbUrl = "mongodb://127.0.0.1:27017/purepick";
+const dbUrl = process.env.ATLASDB_URL;
 
 // Connect to MongoDB
 async function connectToMongoDB() {
@@ -34,7 +34,7 @@ const port = 8000;
 
 // Enable CORS
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:3000' || 'https://pure-pick.vercel.app',
     methods: ['GET', 'POST'],
 }));
 
@@ -47,7 +47,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
     maxHttpBufferSize: 5 * 1024 * 1024, // 5MB
     cors: {
-        origin: "http://localhost:3000",
+        origin: "http://localhost:3000" || 'https://pure-pick.vercel.app',
         methods: ["GET", "POST"],
     }
 });
